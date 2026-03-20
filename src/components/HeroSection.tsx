@@ -77,7 +77,7 @@ const HeroSection = () => {
           }`}
         >
           <button
-            onClick={() => scrollTo('projects')}
+            onClick={handleViewProjects}
             className="clip-btn px-8 py-3 bg-gradient-to-r from-primary to-secondary font-display text-xs uppercase tracking-widest text-primary-foreground hover:shadow-[0_0_30px_hsl(174,100%,50%,0.3)] transition-all duration-300"
             data-hover
           >
