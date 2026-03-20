@@ -14,6 +14,12 @@ const HeroSection = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleViewProjects = () => {
+    window.dispatchEvent(new Event('warp-speed'));
+    // Delay scroll to let warp animation play
+    setTimeout(() => scrollTo('projects'), 1200);
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden grid-overlay">
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">

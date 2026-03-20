@@ -331,6 +331,107 @@ const SpaceBackground = () => {
 
     let shootingStarTimer = 0;
 
+    // ═══════════════ WARP SPEED / HYPERSPACE ═══════════════
+    const warpLineCount = 300;
+    const warpGeo = new THREE.BufferGeometry();
+    const warpPositions = new Float32Array(warpLineCount * 6); // 2 vertices per line
+    const warpColors = new Float32Array(warpLineCount * 6);
+    const warpSpeeds = new Float32Array(warpLineCount);
+    const warpAngles = new Float32Array(warpLineCount);
+    const warpRadii = new Float32Array(warpLineCount);
+
+    const warpColorPalette = [
+      new THREE.Color('#00ffe7'),
+      new THREE.Color('#a855f7'),
+      new THREE.Color('#7dd3fc'),
+      new THREE.Color('#ffffff'),
+      new THREE.Color('#fbbf24'),
+    ];
+
+    for (let i = 0; i < warpLineCount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 20 + Math.random() * 350;
+      const z = (Math.random() - 0.5) * 1500;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      // Start and end vertices (identical initially)
+      warpPositions[i * 6] = x;
+      warpPositions[i * 6 + 1] = y;
+      warpPositions[i * 6 + 2] = z;
+      warpPositions[i * 6 + 3] = x;
+      warpPositions[i * 6 + 4] = y;
+      warpPositions[i * 6 + 5] = z;
+
+      warpSpeeds[i] = 15 + Math.random() * 35;
+      warpAngles[i] = angle;
+      warpRadii[i] = radius;
+
+      const c = warpColorPalette[Math.floor(Math.random() * warpColorPalette.length)];
+      warpColors[i * 6] = c.r; warpColors[i * 6 + 1] = c.g; warpColors[i * 6 + 2] = c.b;
+      warpColors[i * 6 + 3] = c.r; warpColors[i * 6 + 4] = c.g; warpColors[i * 6 + 5] = c.b;
+    }
+
+    warpGeo.setAttribute('position', new THREE.BufferAttribute(warpPositions, 3));
+    warpGeo.setAttribute('color', new THREE.BufferAttribute(warpColors, 3));
+
+    const warpMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const warpLines = new THREE.LineSegments(warpGeo, warpMat);
+    scene.add(warpLines);
+
+    // Warp state
+    let warpActive = false;
+    let warpProgress = 0; // 0→1 ramp up, hold, then ramp down
+    let warpPhase: 'idle' | 'accelerate' | 'cruise' | 'decelerate' = 'idle';
+    let warpTimer = 0;
+    const WARP_ACCEL = 40; // frames
+    const WARP_CRUISE = 50;
+    const WARP_DECEL = 50;
+
+    // Flash overlay
+    const flashGeo = new THREE.PlaneGeometry(4000, 4000);
+    const flashMat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color('#00ffe7'),
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const flashMesh = new THREE.Mesh(flashGeo, flashMat);
+    flashMesh.position.z = camera.position.z - 50;
+    scene.add(flashMesh);
+
+    const triggerWarp = () => {
+      if (warpPhase !== 'idle') return;
+      warpActive = true;
+      warpPhase = 'accelerate';
+      warpTimer = 0;
+      warpProgress = 0;
+
+      // Reset warp line positions
+      const pos = warpGeo.attributes.position as THREE.BufferAttribute;
+      for (let i = 0; i < warpLineCount; i++) {
+        const angle = warpAngles[i];
+        const radius = warpRadii[i];
+        const z = (Math.random() - 0.5) * 1500;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        pos.setXYZ(i * 2, x, y, z);
+        pos.setXYZ(i * 2 + 1, x, y, z);
+      }
+      pos.needsUpdate = true;
+    };
+
+    const handleWarpEvent = () => triggerWarp();
+    window.addEventListener('warp-speed', handleWarpEvent);
+
     // ═══════════════ ANIMATION LOOP ═══════════════
     const clock = new THREE.Clock();
     let animId: number;
@@ -363,6 +464,73 @@ const SpaceBackground = () => {
         o.scale.set(s, s, s);
         (o.material as THREE.MeshBasicMaterial).opacity = 0.01 + Math.sin(elapsed * 0.2 + i) * 0.006;
       });
+
+      // ── WARP ANIMATION ──
+      if (warpActive) {
+        warpTimer++;
+        if (warpPhase === 'accelerate') {
+          warpProgress = Math.min(1, warpTimer / WARP_ACCEL);
+          if (warpTimer >= WARP_ACCEL) { warpPhase = 'cruise'; warpTimer = 0; }
+        } else if (warpPhase === 'cruise') {
+          warpProgress = 1;
+          if (warpTimer >= WARP_CRUISE) { warpPhase = 'decelerate'; warpTimer = 0; }
+        } else if (warpPhase === 'decelerate') {
+          warpProgress = 1 - warpTimer / WARP_DECEL;
+          if (warpTimer >= WARP_DECEL) {
+            warpPhase = 'idle';
+            warpActive = false;
+            warpProgress = 0;
+          }
+        }
+
+        const eased = warpProgress * warpProgress; // ease-in feel
+        warpMat.opacity = eased * 0.7;
+
+        // Stretch warp lines toward camera (z direction)
+        const pos = warpGeo.attributes.position as THREE.BufferAttribute;
+        for (let i = 0; i < warpLineCount; i++) {
+          const z = pos.getZ(i * 2);
+          const newZ = z + warpSpeeds[i] * eased;
+
+          // Tail vertex stays, head vertex streaks forward
+          pos.setZ(i * 2 + 1, newZ);
+
+          // If past camera, reset
+          if (newZ > camera.position.z + 200) {
+            const resetZ = -800 - Math.random() * 600;
+            const angle = warpAngles[i];
+            const radius = warpRadii[i];
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            pos.setXYZ(i * 2, x, y, resetZ);
+            pos.setXYZ(i * 2 + 1, x, y, resetZ);
+          } else {
+            // Move tail to follow with streak length
+            const streakLen = Math.min(80 * eased, newZ - pos.getZ(i * 2));
+            pos.setZ(i * 2, newZ - streakLen);
+          }
+        }
+        pos.needsUpdate = true;
+
+        // Flash at peak
+        if (warpPhase === 'cruise' && warpTimer < 5) {
+          flashMat.opacity = 0.15 * (1 - warpTimer / 5);
+        } else {
+          flashMat.opacity *= 0.9;
+        }
+        flashMesh.position.z = camera.position.z - 50;
+
+        // Camera FOV zoom effect
+        camera.fov = 60 + eased * 30;
+        camera.updateProjectionMatrix();
+      } else {
+        warpMat.opacity *= 0.95;
+        if (camera.fov > 60.1) {
+          camera.fov += (60 - camera.fov) * 0.05;
+          camera.updateProjectionMatrix();
+        }
+        flashMat.opacity *= 0.9;
+      }
 
       // Shooting stars
       shootingStarTimer++;
@@ -424,6 +592,7 @@ const SpaceBackground = () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('warp-speed', handleWarpEvent);
       renderer.dispose();
       if (containerRef.current?.contains(renderer.domElement)) {
         containerRef.current.removeChild(renderer.domElement);
