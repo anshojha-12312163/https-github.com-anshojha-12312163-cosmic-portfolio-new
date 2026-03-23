@@ -1,0 +1,28 @@
+📜 SAVE YOUR HACKERRANK CERTIFICATE IMAGE
+==========================================
+
+You just uploaded your HackerRank SQL (Advanced) certificate image showing:
+- Certificate of Accomplishment
+- SQL (Advanced)
+- Presented to: Ansh Ojha
+- Earned on: 24 Feb, 2026
+- ID: 57AECEC2E18C
+
+HOW TO SAVE IT:
+
+1. Right-click on the certificate image you just uploaded in the chat
+2. Select "Save Image As..."
+3. Save it to: cosmic-portfolio/public/certificates/sql-hackerrank.png
+
+OR drag and drop:
+1. Open folder: cosmic-portfolio/public/certificates/
+2. Drag the certificate image from the chat into that folder
+3. Rename it to: sql-hackerrank.png
+
+VERIFY IT WORKED:
+After saving, refresh your browser at http://localhost:8080
+Scroll to the "Experience & Certificates" section
+The SQL certificate card should now show your actual certificate image!
+
+The certificate link is already configured:
+✅ https://www.hackerrank.com/certificates/57aecec2e18c

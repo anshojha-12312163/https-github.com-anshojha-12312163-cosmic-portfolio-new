@@ -1,0 +1,34 @@
+📸 SAVE YOUR UPLOADED IMAGES HERE
+=====================================
+
+You uploaded 2 images in the chat. Here's where to save them:
+
+IMAGE 1: Vedix AI Screenshot (The dark interface with "The Most Accurate AI Mind Ever Built")
+→ Save as: cosmic-portfolio/public/projects/vedix-ai.png
+
+IMAGE 2: Analytics Dashboard (The dashboard showing $24.9M Revenue and charts)
+→ Save as: cosmic-portfolio/public/projects/analytics-dashboard.png
+
+STILL NEEDED:
+→ SmartCity AI screenshot: cosmic-portfolio/public/projects/smartcity-ai.png
+
+
+HOW TO SAVE:
+1. Right-click on each image in the chat
+2. Select "Save Image As..."
+3. Navigate to the folder shown above
+4. Save with the exact filename shown
+
+OR use drag-and-drop:
+1. Open the folder: cosmic-portfolio/public/projects/
+2. Drag each image from the chat into that folder
+3. Rename them to match the filenames above
+
+
+VERIFY IT WORKED:
+After saving, refresh your browser at http://localhost:8080
+Scroll to the Projects section - you should see your actual screenshots!
+
+
+The portfolio is already configured to use these images.
+Just save them in the right location and they'll appear automatically! ✨
