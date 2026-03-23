@@ -85,34 +85,34 @@ const CertificatesSection = () => {
   }, []);
 
   return (
-    <section id="certificates" ref={sectionRef} className="relative py-24 grid-overlay">
-      <div className="w-full px-8 lg:px-16 xl:px-20">
-        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-12 scroll-reveal">
+    <section id="certificates" ref={sectionRef} className="relative py-16 sm:py-24 grid-overlay">
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-20">
+        <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 sm:mb-12 scroll-reveal">
           Experience & Certificates
         </h2>
 
         {/* Experience Section */}
-        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6 scroll-reveal">
+        <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6 scroll-reveal">
           <span className="text-primary">&gt;</span> Professional Experience
         </h3>
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {experience.map((exp, i) => (
             <div
               key={exp.title}
-              className="clip-futuristic bg-card border border-border p-6 relative overflow-hidden group hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_0_30px_hsl(174,100%,50%,0.08)] transition-all duration-400 scroll-reveal"
+              className="clip-futuristic bg-card border border-border p-4 sm:p-6 relative overflow-hidden group hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_0_30px_hsl(174,100%,50%,0.08)] transition-all duration-400 scroll-reveal"
               style={{ transitionDelay: `${i * 0.1}s` }}
             >
-              <div className="flex items-start gap-4">
-                <span className="text-3xl">{exp.icon}</span>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl">{exp.icon}</span>
                 <div className="flex-1">
-                  <h4 className="font-display text-base font-bold text-foreground mb-1">{exp.title}</h4>
-                  <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <span className="px-2.5 py-1 bg-primary/10 border border-primary/20 rounded font-mono text-xs text-primary">
+                  <h4 className="font-display text-sm sm:text-base font-bold text-foreground mb-1">{exp.title}</h4>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                    <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-primary/10 border border-primary/20 rounded font-mono text-[10px] sm:text-xs text-primary">
                       {exp.role}
                     </span>
-                    <span className="font-mono text-xs text-muted-foreground">{exp.period}</span>
+                    <span className="font-mono text-[10px] sm:text-xs text-muted-foreground">{exp.period}</span>
                   </div>
-                  <p className="font-body text-sm text-foreground/70 leading-relaxed">{exp.desc}</p>
+                  <p className="font-body text-xs sm:text-sm text-foreground/70 leading-relaxed">{exp.desc}</p>
                 </div>
               </div>
             </div>
@@ -120,16 +120,16 @@ const CertificatesSection = () => {
         </div>
 
         {/* Certificates Grid */}
-        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6 scroll-reveal">
+        <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6 scroll-reveal">
           <span className="text-secondary">&gt;</span> Certifications
         </h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 sm:mb-16">
           {certificates.map((cert, i) => (
             <div
               key={cert.name}
               onMouseMove={(e) => handleMouseMove(e, i)}
               onMouseLeave={handleMouseLeave}
-              className="relative h-[320px] scroll-reveal"
+              className="relative h-[280px] sm:h-[320px] scroll-reveal"
               style={{ 
                 transitionDelay: `${i * 0.06}s`,
                 perspective: '1000px',
@@ -176,27 +176,27 @@ const CertificatesSection = () => {
                     </div>
                     
                     {/* Front content overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5">
-                      <span className="absolute top-2 right-2 text-3xl">{cert.icon}</span>
-                      <h3 className="font-display text-sm font-semibold text-foreground leading-snug mb-2">{cert.name}</h3>
-                      <span className="font-mono text-xs text-primary/60 block">{cert.date}</span>
-                      <p className="font-mono text-xs text-primary/70 mt-2">Hover to view →</p>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                      <span className="absolute top-2 right-2 text-2xl sm:text-3xl">{cert.icon}</span>
+                      <h3 className="font-display text-xs sm:text-sm font-semibold text-foreground leading-snug mb-2">{cert.name}</h3>
+                      <span className="font-mono text-[10px] sm:text-xs text-primary/60 block">{cert.date}</span>
+                      <p className="font-mono text-[10px] sm:text-xs text-primary/70 mt-2">Hover to view →</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Back Face */}
                 <div className="absolute inset-0 clip-futuristic bg-card border border-primary/30 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_40px_hsl(174,100%,50%,0.2)]" style={{ backfaceVisibility: 'hidden' }}>
-                  <div className="h-full overflow-y-auto p-6 flex flex-col">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-4xl">{cert.icon}</span>
-                      <span className="font-mono text-xs text-primary/60">{cert.date}</span>
+                  <div className="h-full overflow-y-auto p-4 sm:p-6 flex flex-col">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <span className="text-3xl sm:text-4xl">{cert.icon}</span>
+                      <span className="font-mono text-[10px] sm:text-xs text-primary/60">{cert.date}</span>
                     </div>
 
-                    <h3 className="font-display text-base font-bold text-primary mb-4 leading-snug">{cert.name}</h3>
+                    <h3 className="font-display text-sm sm:text-base font-bold text-primary mb-3 sm:mb-4 leading-snug">{cert.name}</h3>
                     
                     {/* Certificate preview image */}
-                    <div className="relative h-32 mb-4 rounded overflow-hidden border border-primary/20">
+                    <div className="relative h-24 sm:h-32 mb-3 sm:mb-4 rounded overflow-hidden border border-primary/20">
                       <img 
                         src={cert.image} 
                         alt={cert.name}
@@ -208,7 +208,7 @@ const CertificatesSection = () => {
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-mono group/link mt-auto"
+                      className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-xs sm:text-sm font-mono group/link mt-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <span>View Certificate</span>
@@ -222,25 +222,25 @@ const CertificatesSection = () => {
         </div>
 
         {/* Achievements */}
-        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6 scroll-reveal">
+        <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6 scroll-reveal">
           <span className="text-gold">&gt;</span> Achievements
         </h3>
-        <div className="grid gap-6">
+        <div className="grid gap-4 sm:gap-6">
           {activities.map((activity, i) => (
             <div
               key={activity.title}
-              className={`clip-futuristic bg-card border border-border p-6 relative overflow-hidden group hover:-translate-y-1 hover:shadow-[0_0_30px_hsl(174,100%,50%,0.08)] transition-all duration-400 scroll-reveal`}
+              className={`clip-futuristic bg-card border border-border p-4 sm:p-6 relative overflow-hidden group hover:-translate-y-1 hover:shadow-[0_0_30px_hsl(174,100%,50%,0.08)] transition-all duration-400 scroll-reveal`}
               style={{ 
                 transitionDelay: `${i * 0.1}s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? 'translateY(0)' : 'translateY(20px)',
               }}
             >
-              <div className="flex items-start gap-4">
-                <span className="text-3xl">{activity.icon}</span>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl">{activity.icon}</span>
                 <div>
-                  <h4 className="font-display text-base font-bold text-foreground mb-2">{activity.title}</h4>
-                  <p className="font-body text-base text-foreground/60 leading-relaxed">{activity.desc}</p>
+                  <h4 className="font-display text-sm sm:text-base font-bold text-foreground mb-2">{activity.title}</h4>
+                  <p className="font-body text-sm sm:text-base text-foreground/60 leading-relaxed">{activity.desc}</p>
                 </div>
               </div>
             </div>

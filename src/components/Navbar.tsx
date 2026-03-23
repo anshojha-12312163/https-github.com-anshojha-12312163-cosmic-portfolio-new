@@ -6,6 +6,7 @@ const Navbar = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverX, setHoverX] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const spotlightX = useRef(0);
   const ambienceX = useRef(0);
@@ -13,6 +14,7 @@ const Navbar = () => {
   const scrollTo = (id: string, index: number) => {
     document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
     setActiveIndex(index);
+    setMobileMenuOpen(false);
   };
 
   useEffect(() => {
@@ -75,15 +77,28 @@ const Navbar = () => {
   }, [activeIndex]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4">
       <div className="w-full flex items-center justify-between">
         <a
           href="#"
-          className="font-display text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+          className="font-display text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent relative z-[60]"
           data-hover
         >
           AO
         </a>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden relative z-[60] w-10 h-10 flex flex-col items-center justify-center gap-1.5 glass rounded-lg p-2"
+          aria-label="Toggle menu"
+        >
+          <span className={`w-5 h-0.5 bg-primary transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-5 h-0.5 bg-primary transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-5 h-0.5 bg-primary transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </button>
+
+        {/* Desktop Navigation */}
         <div 
           ref={navRef}
           className="hidden md:flex items-center gap-2 relative h-11 px-2 rounded-full glass overflow-hidden"
@@ -124,6 +139,37 @@ const Navbar = () => {
                     : 'text-foreground/70 hover:text-foreground'
                 }`}
                 data-hover
+              >
+                {link}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden fixed inset-0 z-[55] transition-all duration-300 ${
+            mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-background/95 backdrop-blur-lg"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Menu Content */}
+          <div className="relative h-full flex flex-col items-center justify-center gap-6 px-8">
+            {links.map((link, index) => (
+              <button
+                key={link}
+                onClick={() => scrollTo(link, index)}
+                className={`font-display text-2xl uppercase tracking-wider transition-all duration-300 ${
+                  activeIndex === index
+                    ? 'text-primary scale-110'
+                    : 'text-foreground/70 hover:text-foreground hover:scale-105'
+                } ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+                style={{ transitionDelay: mobileMenuOpen ? `${index * 0.05}s` : '0s' }}
               >
                 {link}
               </button>

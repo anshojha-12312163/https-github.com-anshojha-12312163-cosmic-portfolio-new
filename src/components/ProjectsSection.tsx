@@ -51,18 +51,18 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" className="relative min-h-screen flex items-center py-24 grid-overlay">
-      <div className="w-full px-8 lg:px-16 xl:px-20">
-        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-12 scroll-reveal">
+    <section id="projects" className="relative min-h-screen flex items-center py-16 sm:py-24 grid-overlay">
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-20">
+        <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 sm:mb-12 scroll-reveal">
           Featured Projects
         </h2>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           {projects.map((proj, i) => (
             <div
               key={proj.num}
               onMouseMove={(e) => handleMouseMove(e, i)}
               onMouseLeave={handleMouseLeave}
-              className="relative h-[500px] scroll-reveal"
+              className="relative h-[400px] sm:h-[500px] scroll-reveal"
               style={{ 
                 transitionDelay: `${i * 0.1}s`,
                 perspective: '1000px',
@@ -107,16 +107,16 @@ const ProjectsSection = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-card via-card/70 to-transparent" />
                     
                     {/* Front content overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                      <span className="inline-block px-2 py-0.5 bg-secondary/10 border border-secondary/20 rounded font-mono text-[10px] text-secondary uppercase tracking-wider mb-3">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                      <span className="inline-block px-2 py-0.5 bg-secondary/10 border border-secondary/20 rounded font-mono text-[10px] text-secondary uppercase tracking-wider mb-2 sm:mb-3">
                         {proj.category}
                       </span>
-                      <h3 className="font-display text-2xl font-bold text-foreground mb-2">{proj.title}</h3>
+                      <h3 className="font-display text-lg sm:text-2xl font-bold text-foreground mb-2">{proj.title}</h3>
                       <p className="font-mono text-xs text-primary/70">Hover to see details →</p>
                     </div>
 
                     {/* Ghost number */}
-                    <span className="absolute top-4 right-6 font-display text-7xl font-black text-foreground/[0.08] select-none">
+                    <span className="absolute top-4 right-4 sm:right-6 font-display text-5xl sm:text-7xl font-black text-foreground/[0.08] select-none">
                       {proj.num}
                     </span>
                   </div>
@@ -124,22 +124,22 @@ const ProjectsSection = () => {
 
                 {/* Back Face */}
                 <div className="absolute inset-0 clip-futuristic bg-card border border-primary/30 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_40px_hsl(174,100%,50%,0.2)]" style={{ backfaceVisibility: 'hidden' }}>
-                  <div className="h-full overflow-y-auto p-8 flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
+                  <div className="h-full overflow-y-auto p-4 sm:p-8 flex flex-col">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                       <span className="inline-block px-2 py-0.5 bg-secondary/20 border border-secondary/40 rounded font-mono text-[10px] text-secondary uppercase tracking-wider">
                         {proj.category}
                       </span>
                       <span className="font-mono text-[10px] text-muted-foreground">{proj.date}</span>
                     </div>
 
-                    <h3 className="font-display text-xl font-bold text-primary mb-4">{proj.title}</h3>
-                    <p className="font-body text-sm text-foreground/85 leading-relaxed mb-6 flex-grow">{proj.desc}</p>
+                    <h3 className="font-display text-base sm:text-xl font-bold text-primary mb-3 sm:mb-4">{proj.title}</h3>
+                    <p className="font-body text-xs sm:text-sm text-foreground/85 leading-relaxed mb-4 sm:mb-6 flex-grow">{proj.desc}</p>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                       {proj.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 bg-secondary/10 border border-secondary/30 rounded font-mono text-xs text-secondary/90"
+                          className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-secondary/10 border border-secondary/30 rounded font-mono text-[10px] sm:text-xs text-secondary/90"
                         >
                           {tag}
                         </span>
@@ -151,7 +151,7 @@ const ProjectsSection = () => {
                         href={proj.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-mono group/link mt-auto"
+                        className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-xs sm:text-sm font-mono group/link mt-auto"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <span>View Project</span>
