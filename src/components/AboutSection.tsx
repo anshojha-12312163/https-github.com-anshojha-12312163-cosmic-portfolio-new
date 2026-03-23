@@ -58,16 +58,17 @@ const AboutSection = () => {
           <div className="lg:col-span-3 space-y-10">
             <div className="space-y-6">
               <p className="font-body text-xl md:text-2xl text-foreground leading-relaxed scroll-reveal">
-                I'm a B.Tech Computer Science & Engineering student at Lovely Professional University with a passion 
-                for delivering high-quality software solutions. As a Fiverr freelancer, I've successfully delivered 
-                15+ end-to-end web & mobile applications for international clients, maintaining a 4-star rating and 
-                95% client retention rate.
+                I am a B.Tech Computer Science Engineering student with a keen interest in Data Science, AI/ML, and 
+                Full Stack Development. I am driven by a passion for creating intelligent, scalable, and real-world 
+                solutions — from developing machine learning models to building end-to-end web applications.
               </p>
               <p className="font-body text-lg md:text-xl text-foreground/80 leading-relaxed scroll-reveal">
-                With expertise in Java, C++, JavaScript, and Python, I specialize in full-stack development, machine 
-                learning, data analysis, and big data technologies. I'm passionate about building scalable, 
-                business-aligned applications and continuously expanding my technical skillset through hands-on projects 
-                and competitive programming.
+                With a strong emphasis on clean code and problem-solving, I continuously strive to enhance my technical 
+                expertise and stay updated with emerging technologies. I am currently looking for opportunities to apply 
+                my skills in dynamic environments and contribute to impactful, technology-driven solutions.
+              </p>
+              <p className="font-body text-lg md:text-xl text-foreground/90 leading-relaxed scroll-reveal italic border-l-4 border-primary/40 pl-6">
+                "I don't just study technology — I build with it, and I build things that matter."
               </p>
             </div>
 
